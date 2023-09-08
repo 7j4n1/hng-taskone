@@ -33,8 +33,8 @@ Route::get('/api', function(Request $request){
         "current_day" => date('l'),
         "utc_time"=> $cur_date->format('Y-m-d\TH:i:sZ'),
         "track" => "backend",
-        "github_file_url" => "",
-        "github_repo_url" => "",
+        "github_file_url" => "https://github.com/7j4n1/hng-taskone/blob/main/routes/web.php",
+        "github_repo_url" => "https://github.com/7j4n1/hng-taskone",
         "status_code" => 200,
     ]);
 });
