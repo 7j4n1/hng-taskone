@@ -1,6 +1,9 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/api', function(Request $request){
+    $data = $request->only('slack_name', 'track');
+    $validator = Validator::make($data, [
+        'slack_name' =>'required|string',
+        'track' => 'required|string'
+    ]);
+
+    if($validator->fails()){
+        return response()->json(['error' => $validator->messages()], 200); 
+    }
+
+    $cur_date = new DateTimeImmutable('now', new DateTimeZone('UTC')); 
+    return response()->json([
+        "slack_name" => $request->slack_name,
+        "current_day" => date('l'),
+        "utc_time"=> $cur_date->format('Y-m-d\TH:i:sZ'),
+        "track" => "backend",
+        "github_file_url" => "",
+        "github_repo_url" => "",
+        "status_code" => 200,
+    ]);
 });
