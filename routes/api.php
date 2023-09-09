@@ -26,7 +26,7 @@ Route::get('/', function(Request $request){
         return response()->json(['error' => $validator->messages()], 200); 
     }
 
-    $cur_date = new DateTimeImmutable('now', new DateTimeZone('UTC')); 
+    $cur_date = new DateTime('now', new DateTimeZone('UTC')); 
     $response = response()->json([
         "slack_name" => $request->slack_name,
         "current_day" => date('l'),
