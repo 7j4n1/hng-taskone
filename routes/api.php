@@ -27,15 +27,17 @@ Route::get('/', function(Request $request){
     }
 
     $cur_date = new DateTimeImmutable('now', new DateTimeZone('UTC')); 
-    return response()->json([
+    $response = response()->json([
         "slack_name" => $request->slack_name,
         "current_day" => date('l'),
-        "utc_time"=> $cur_date->format('Y-m-d\TH:i:sZ'),
+        "utc_time"=> $cur_date->format('Y-m-d\TH:i:sp'),
         "track" => "backend",
-        "github_file_url" => "",
-        "github_repo_url" => "",
+        "github_file_url" => 'https://github.com/7j4n1/hng-taskone/blob/main/routes/api.php',
+        "github_repo_url" => "https://github.com/7j4n1/hng-taskone",
         "status_code" => 200,
-    ]);
+    ], 200, [], JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT);
+
+    return $response;
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
